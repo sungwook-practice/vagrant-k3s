@@ -8,7 +8,8 @@ Vagrant.configure("2") do |config|
     vb.memory = "2048"
   end
 
+  # reference: https://docs.k3s.io/installation/configuration#configuration-with-install-script
   config.vm.provision "shell", inline: <<-SHELL
-    curl -sfL https://get.k3s.io | VERSION=v1.20.0+k3s1 K3S_KUBECONFIG_MODE="644" K3S_LOG_LEVEL="debug" K3S_CONTROLLER_ARGS="--v=10" K3S_SCHEDULER_ARGS="--v=10" K3S_API_SERVER_ARGS="--v=10" sh -
+    curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server" sh -s - --write-kubeconfig-mode 644 --debug --log /tmp/k3s.log
   SHELL
 end
